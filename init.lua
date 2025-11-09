@@ -37,5 +37,24 @@ vim.schedule(function()
 end)
 
 
--- vim.opt.number = true
--- vim.opt.relativenumber = true
+vim.opt.number = true
+vim.opt.relativenumber = true
+
+
+local map = vim.keymap.set
+
+map({"n", "v", "i"}, "<Up>", "<Nop>")
+map({"n", "v", "i"}, "<Down>", "<Nop>")
+map({"n", "v", "i"}, "<Left>", "<Nop>")
+map({"n", "v", "i"}, "<Right>", "<Nop>")
+
+-- map({"i"}, "jj", "<Esc>")
+map({"i"}, "jk", "<Esc>")
+
+-- prime dhh video - teej suggested using control+y for accepting autocomplete.
+
+-- map("", )
+
+vim.keymap.set("n", "<leader>f", "<cmd>Telescope find_files<cr>")
+
+

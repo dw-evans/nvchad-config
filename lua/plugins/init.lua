@@ -154,6 +154,12 @@ return {
     end,
   },
 
+  {
+    "nvim-telescope/telescope.nvim",
+    dependencies = {
+      "nvim-lua/plenary.nvim"
+    }
+  },
 
   -- test new blink
   { import = "nvchad.blink.lazyspec" },
