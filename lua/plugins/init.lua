@@ -24,6 +24,7 @@ return {
       "rcarriga/nvim-dap-ui",
       "mfussenegger/nvim-dap-python",
     },
+    lazy = false, -- lazy hack to force loading for cpp.
     config = function(_, opts)
       local dap = require("dap")
       local dapui = require("dapui")
@@ -35,6 +36,26 @@ return {
 
       require("dapui").setup({})
       map("n", "<leader>du", dapui.toggle)
+
+
+      dap.adapters.codelldb = {
+        type = "executable",
+        command = "codelldb",
+      }
+
+      dap.configurations.cpp = {
+        {
+          name = "Launch file",
+          type = "codelldb",
+          request = "launch",
+          program = function()
+            return vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/", "file")
+          end,
+          cwd = "${workspaceFolder}",
+          stopOnEntry = false,
+        },
+      }
+      dap.configurations.c = dap.configurations.cpp
 
       -- require("core.utils").load_mappings("dap")
     end,
@@ -57,20 +78,20 @@ return {
     end,
   },
 
-  {
-    "jay-babu/mason-nvim-dap.nvim",
-    dependencies = {
-      "williamboman/mason.nvim",
-      "mfussenegger/nvim-dap",
-    },
-    opts = {
-      handlers = {},
-      ensure_installed = {},
-      event = "VeryLazy",
-    },
-  },
-
-
+  -- {
+  --   "jay-babu/mason-nvim-dap.nvim",
+  --   dependencies = {
+  --     "williamboman/mason.nvim",
+  --     "mfussenegger/nvim-dap",
+  --   },
+  --   opts = {
+  --     handlers = {},
+  --     ensure_installed = {},
+  --     -- event = "VeryLazy",
+  --   },
+  -- },
+  --
+  --
   {
     "rcarriga/nvim-dap-ui",
     dependencies = {
