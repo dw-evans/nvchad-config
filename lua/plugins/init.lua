@@ -16,7 +16,6 @@ return {
     "nvim-neotest/nvim-nio",
   },
 
-
   {
     "mfussenegger/nvim-dap",
     dependencies = {
@@ -26,17 +25,16 @@ return {
     },
     lazy = false, -- lazy hack to force loading for cpp.
     config = function(_, opts)
-      local dap = require("dap")
-      local dapui = require("dapui")
+      local dap = require "dap"
+      local dapui = require "dapui"
       -- local dap_python = require("dap-python")
       -- dap.setup()
       local map = vim.keymap.set
       map("n", "<leader>db", dap.toggle_breakpoint)
       map("n", "<leader>dc", dap.continue)
 
-      require("dapui").setup({})
+      require("dapui").setup {}
       map("n", "<leader>du", dapui.toggle)
-
 
       dap.adapters.codelldb = {
         type = "executable",
@@ -70,11 +68,10 @@ return {
     config = function(_, opts)
       local path = "~/.local/share/nvim/mason/packages/debugpy/venv/bin/python"
       -- local dap = require("dap")
-      local dap_python = require("dap-python")
+      local dap_python = require "dap-python"
 
       dap_python.setup(path)
       -- local map = vim.keymap.set
-
     end,
   },
 
@@ -99,8 +96,8 @@ return {
       "mfussenegger/nvim-dap-python",
     },
     config = function()
-      local dapui = require("dapui")
-      local dap = require("dap")
+      local dapui = require "dapui"
+      local dap = require "dap"
       dapui.setup()
       dap.listeners.after.event_initialized["dapui_config"] = function()
         dapui.open()
@@ -118,10 +115,10 @@ return {
     "williamboman/mason.nvim",
     config = function()
       require("mason").setup()
-      local registry = require("mason-registry")
+      local registry = require "mason-registry"
 
-      for _, pkg_name in ipairs { 
-        "stylua", 
+      for _, pkg_name in ipairs {
+        "stylua",
         "prettier",
         "debugpy",
         "ruff",
@@ -134,7 +131,7 @@ return {
         local ok, pkg = pcall(registry.get_package, pkg_name)
         if ok then
           if not pkg:is_installed() then
-             pkg:install()
+            pkg:install()
           end
         end
       end
@@ -145,34 +142,84 @@ return {
     "williamboman/mason-lspconfig.nvim",
     dependencies = { "williamboman/mason.nvim", "neovim/nvim-lspconfig" },
     config = function()
-      require("mason-lspconfig").setup({
+      require("mason-lspconfig").setup {
         ensure_installed = {
           "pyright",
           "clangd",
         },
-      })
+      }
     end,
   },
-
+ 
   {
     "nvim-telescope/telescope.nvim",
     dependencies = {
-      "nvim-lua/plenary.nvim"
-    }
+      "nvim-lua/plenary.nvim",
+    },
   },
 
   -- test new blink
   { import = "nvchad.blink.lazyspec" },
 
   {
-  	"nvim-treesitter/nvim-treesitter",
-  	opts = {
-  		ensure_installed = {
-  			"python", "c", "markdown", "bash", "cpp", "json",
-        "javascript", 
-        "vim", "lua", "vimdoc",
-  	    "html", "css"
-  		},
-  	},
+    "nvim-treesitter/nvim-treesitter",
+    opts = {
+      ensure_installed = {
+        "python",
+        "c",
+        "markdown",
+        "bash",
+        "cpp",
+        "json",
+        "javascript",
+        "vim",
+        "lua",
+        "vimdoc",
+        "html",
+        "css",
+      },
+    },
+  },
+
+  {
+    "nvim-tree/nvim-tree.lua",
+    cmd = { "NvimTreeToggle", "NvimTreeFocus" },
+    opts = function()
+      return {
+        filters = { 
+            dotfiles = false,
+            exclude = { ".venv" },
+        },
+        disable_netrw = true,
+        hijack_cursor = true,
+        sync_root_with_cwd = true,
+        update_focused_file = {
+          enable = true,
+          update_root = false,
+        },
+        view = {
+          width = 30,
+          preserve_window_proportions = true,
+        },
+        renderer = {
+          root_folder_label = false,
+          highlight_git = true,
+          indent_markers = { enable = true },
+          icons = {
+            glyphs = {
+              default = "󰈚",
+              folder = {
+                default = "",
+                empty = "",
+                empty_open = "",
+                open = "",
+                symlink = "",
+              },
+              git = { unmerged = "" },
+            },
+          },
+        },
+      }
+    end,
   },
 }

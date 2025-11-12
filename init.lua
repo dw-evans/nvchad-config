@@ -47,6 +47,7 @@ map({"n", "v", "i"}, "<Up>", "<Nop>")
 map({"n", "v", "i"}, "<Down>", "<Nop>")
 map({"n", "v", "i"}, "<Left>", "<Nop>")
 map({"n", "v", "i"}, "<Right>", "<Nop>")
+-- map({"n", "v", "i"}, "<C-s>", "<Nop>")
 
 -- map({"i"}, "jj", "<Esc>")
 map({"i"}, "jk", "<Esc>")
@@ -57,4 +58,6 @@ map({"i"}, "jk", "<Esc>")
 
 vim.keymap.set("n", "<leader>f", "<cmd>Telescope find_files<cr>")
 
-
+map("n", "<leader><F2>", function()
+    vim.lsp.buf.rename()
+end)
