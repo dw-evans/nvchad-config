@@ -36,21 +36,19 @@ vim.schedule(function()
   require "mappings"
 end)
 
-
 vim.opt.number = true
 vim.opt.relativenumber = true
 
-
 local map = vim.keymap.set
 
-map({"n", "v", "i"}, "<Up>", "<Nop>")
-map({"n", "v", "i"}, "<Down>", "<Nop>")
-map({"n", "v", "i"}, "<Left>", "<Nop>")
-map({"n", "v", "i"}, "<Right>", "<Nop>")
+map({ "n", "v", "i" }, "<Up>", "<Nop>")
+map({ "n", "v", "i" }, "<Down>", "<Nop>")
+map({ "n", "v", "i" }, "<Left>", "<Nop>")
+map({ "n", "v", "i" }, "<Right>", "<Nop>")
 -- map({"n", "v", "i"}, "<C-s>", "<Nop>")
 
 -- map({"i"}, "jj", "<Esc>")
-map({"i"}, "jk", "<Esc>")
+map({ "i" }, "jk", "<Esc>")
 
 -- prime dhh video - teej suggested using control+y for accepting autocomplete.
 
@@ -59,5 +57,33 @@ map({"i"}, "jk", "<Esc>")
 vim.keymap.set("n", "<leader>f", "<cmd>Telescope find_files<cr>")
 
 map("n", "<leader><F2>", function()
-    vim.lsp.buf.rename()
+  vim.lsp.buf.rename()
 end)
+
+-- local cmp = require "cmp"
+--
+-- cmp.setup {
+--   mapping = {
+--     ["<CR>"] = cmp.mapping(function(fallback)
+--       if cmp.visible() and cmp.get_selected_entry() then
+--         cmp.confirm { select = false }
+--       else
+--         fallback()
+--       end
+--     end, { "i", "s" }),
+--   },
+-- }
+
+-- local cmp = require("cmp")
+-- cmp.setup({
+--   mapping = {
+--     ["<CR>"] = cmp.mapping(function(fallback)
+--       -- Only insert a newline; never confirm a suggestion
+--       fallback()
+--     end, { "i", "s" }),
+--   },
+-- })
+
+
+
+vim.keymap.set("n", "<C-v>", "<C-v>", { noremap = true })

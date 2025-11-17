@@ -127,6 +127,7 @@ return {
         "pyright",
         "codelldb",
         "clang-format",
+        "tailwindcss-language-server",
       } do
         local ok, pkg = pcall(registry.get_package, pkg_name)
         if ok then
@@ -150,7 +151,7 @@ return {
       }
     end,
   },
- 
+
   {
     "nvim-telescope/telescope.nvim",
     dependencies = {
@@ -185,10 +186,19 @@ return {
     "nvim-tree/nvim-tree.lua",
     cmd = { "NvimTreeToggle", "NvimTreeFocus" },
     opts = function()
+      -- copied the config from main files, unsure if it is all necessary...
       return {
-        filters = { 
-            dotfiles = false,
-            exclude = { ".venv" },
+        filters = {
+          dotfiles = false,
+          exclude = {
+            ".venv",
+            -- ".gitignore",
+          },
+        },
+        git = {
+          enable = true,
+          ignore = false,
+          show_on_dirs = true,
         },
         disable_netrw = true,
         hijack_cursor = true,
@@ -215,11 +225,27 @@ return {
                 open = "",
                 symlink = "",
               },
-              git = { unmerged = "" },
+              git = {
+                unmerged = "",
+              },
             },
           },
         },
       }
     end,
   },
+  {
+    "saghen/blink.cmp",
+    opts = function(_, opts)
+      opts.keymap = opts.keymap or {}
+      opts.keymap["<CR>"] = { "fallback" } -- or disable entirely
+    end,
+  },
+  {
+    "mg979/vim-visual-multi",
+    branch = "master",
+    lazy = false,
+
+  },
 }
+
